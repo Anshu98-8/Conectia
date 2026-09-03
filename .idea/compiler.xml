@@ -9,8 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
+        <module name="apiGateway" />
+        <module name="discoveryService" />
+        <module name="connectionService" />
         <module name="postService" />
         <module name="userService" />
       </profile>
@@ -18,6 +20,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="apiGateway" options="-parameters" />
+      <module name="connectionService" options="-parameters" />
+      <module name="discoveryService" options="-parameters" />
       <module name="postService" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>
