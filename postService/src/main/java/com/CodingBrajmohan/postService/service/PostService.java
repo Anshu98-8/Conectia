@@ -1,5 +1,9 @@
 package com.CodingBrajmohan.postService.service;
 
+
+import com.CodingBrajmohan.postService.auth.AuthContextHolder;
+import com.CodingBrajmohan.postService.client.ConnectionServiceClient;
+import com.CodingBrajmohan.postService.dto.PersonDto;
 import com.CodingBrajmohan.postService.dto.PostCreateRequestDto;
 import com.CodingBrajmohan.postService.dto.PostDto;
 import com.CodingBrajmohan.postService.entity.PostEntity;
@@ -20,6 +24,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ModelMapper modelMapper;
+    private final ConnectionServiceClient connectionServiceClient;
 
     public PostDto createPost(PostCreateRequestDto postCreateRequestDto, Long userId) {
         log.info("Creating post for user with id: {}", userId);
@@ -31,6 +36,13 @@ public class PostService {
 
     public PostDto getPostById(Long postId) {
         log.info("Getting the post with ID: {}", postId);
+        Long userId = AuthContextHolder.getCurrentUserId();
+
+//        TODO: Remove in future
+//        Call the Connections Service from the Posts Service and pass the userId inside the headers
+
+        List<PersonDto> personDtoList = connectionServiceClient.getFirstDegreeConnection(userId);
+
         PostEntity post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found " +
                 "with ID: "+postId));
         return modelMapper.map(post, PostDto.class);

@@ -1,5 +1,6 @@
 package com.CodingBrajmohan.postService.controller;
 
+import com.CodingBrajmohan.postService.auth.AuthContextHolder;
 import com.CodingBrajmohan.postService.dto.PostCreateRequestDto;
 import com.CodingBrajmohan.postService.dto.PostDto;
 import com.CodingBrajmohan.postService.service.PostService;
@@ -27,6 +28,7 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostDto> getPost(@PathVariable Long postId) {
+        Long userId = AuthContextHolder.getCurrentUserId();
         PostDto postDto = postService.getPostById(postId);
         return ResponseEntity.ok(postDto);
     }

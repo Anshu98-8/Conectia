@@ -1,5 +1,7 @@
 server.port: 8080
 eureka.client.service-url.defaultZone: http://localhost:8761/eureka
+jwt:
+  secretKey: dGhpcy1pcy1hLXN1cGVyLXNlY3VyZS1qd3Qtc2VjcmV0LWtleS10aGF0LWlzLTY0LWNoYXJzLWxvbmchIQ==
 
 logging:
   level:
@@ -28,6 +30,7 @@ spring:
                 - Path=/api/v1/post/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
 
             - id: connection-service
               uri: lb://CONNECTION-SERVICE
@@ -35,3 +38,4 @@ spring:
                 - Path=/api/v1/connection/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
