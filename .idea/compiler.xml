@@ -3,7 +3,7 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for userService" enabled="true">
+      <profile name="Annotation profile for connectionService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -15,6 +15,7 @@
         <module name="connectionService" />
         <module name="postService" />
         <module name="userService" />
+        <module name="notificationService" />
       </profile>
     </annotationProcessing>
   </component>
@@ -23,6 +24,7 @@
       <module name="apiGateway" options="-parameters" />
       <module name="connectionService" options="-parameters" />
       <module name="discoveryService" options="-parameters" />
+      <module name="notificationService" options="-parameters" />
       <module name="postService" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>
