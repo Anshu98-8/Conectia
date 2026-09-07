@@ -9,3 +9,6 @@ spring:
         spring.json.trusted.packages: "userService.event"
         spring.json.type.mapping: "com.CodingBrajmohan.userService.event.UserCreatedEvent:userService.event.UserCreatedEvent"
         spring.json.value.default.type: "userService.event.UserCreatedEvent"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

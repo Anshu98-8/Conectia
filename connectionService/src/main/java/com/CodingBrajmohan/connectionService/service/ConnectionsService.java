@@ -2,10 +2,13 @@ package com.CodingBrajmohan.connectionService.service;
 
 import com.CodingBrajmohan.connectionService.auth.AuthContextHolder;
 import com.CodingBrajmohan.connectionService.entity.PersonEntity;
+import com.CodingBrajmohan.connectionService.event.ConnectionAcceptedEvent;
+import com.CodingBrajmohan.connectionService.event.ConnectionRequestedEvent;
 import com.CodingBrajmohan.connectionService.exception.BadRequestException;
 import com.CodingBrajmohan.connectionService.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 public class ConnectionsService {
 
     private final PersonRepository personRepository;
+    private final KafkaTemplate<Long, ConnectionRequestedEvent> connectionRequestedEventKafkaTemplate;
+    private final KafkaTemplate<Long, ConnectionAcceptedEvent> connectionAcceptedEventKafkaTemplate;
 
     public List<PersonEntity> getFirstDegreeConnectionsOfUser(Long userId) {
         log.info("Getting first degree connections of user with ID: {}", userId);
@@ -43,6 +48,18 @@ public class ConnectionsService {
 
         personRepository.addConnectionRequest(senderId, receiverId);
         log.info("Successfully sent the connection request");
+
+        ConnectionRequestedEvent event = ConnectionRequestedEvent.builder()
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .build();
+
+        connectionRequestedEventKafkaTemplate.send(
+                "connection_requested_topic",
+                event
+        );
+
+
     }
 
     public void acceptConnectionRequest(Long senderId) {
@@ -67,6 +84,16 @@ public class ConnectionsService {
 
         log.info("Successfully accepted the connection request with senderId: {}, receiverId: {}", senderId,
                 receiverId);
+
+        ConnectionAcceptedEvent event = ConnectionAcceptedEvent.builder()
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .build();
+
+        connectionAcceptedEventKafkaTemplate.send(
+                "connection_accepted_topic",
+                event
+        );
 
     }
 
