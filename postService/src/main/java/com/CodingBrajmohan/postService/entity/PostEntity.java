@@ -19,6 +19,8 @@ public class PostEntity {
     @Column(nullable = false)
     private String content;
 
+    private String imageUrl;
+
     @Column(nullable = false)
     private Long userId;
 
