@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "connection-service", path = "/connection")
+@FeignClient(name = "connection-service", path = "/connection", url = "${CONNECTIONS_SERVICE_URI:}")
 public interface ConnectionServiceClient {
 
     @GetMapping("/core/{userId}/first-degree")
