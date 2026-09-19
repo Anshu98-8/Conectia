@@ -1,5 +1,7 @@
 # Conectia
 
+Postman documentation: https://documenter.getpostman.com/view/48807283/2sBYB1P8pZ
+
 Conectia is a backend for a LinkedIn-style social platform that I built to understand how a real application starts to look when it is split into multiple services.
 
 The main idea was not to put everything inside one Spring Boot application. I separated authentication/users, posts, connections, notifications and file uploads into independent services and then connected them using both synchronous and asynchronous communication.
